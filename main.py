@@ -39,11 +39,10 @@ def z_value_dm(a, b, n):
     return z_val
 
 
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(15, 8))
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 5))
 plt.ylim((0, 1))
 n = 25
 m = 500
-
 z_stat = 0
 data = []
 calculated_stats = []
@@ -64,19 +63,26 @@ line_x = np.linspace(rv_theoretical.ppf(margin), rv_theoretical.ppf
 (1 - margin), number_of_samples)
 sns.lineplot(x=line_x, y=rv_theoretical.pdf(line_x), color='b', lw=1, ax=ax, label='Распределение')
 
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(15, 8))
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 5))
 plt.ylim((0, 1))
+
 n = number_of_samples
+
 rv_theoretical = stats.t(df=(len(sample_first) + len(sample_second) - 2))
 local_alpha_value = (alpha_value / 2)
+
 left_vline_position = rv_theoretical.ppf(local_alpha_value)
 right_vline_position = rv_theoretical.ppf(1 - local_alpha_value)
+
 line_x = np.linspace(rv_theoretical.ppf(margin), rv_theoretical.ppf(1 - margin), number_of_samples)
 sns.lineplot(x=line_x, y=rv_theoretical.pdf(line_x), color='b', lw=1, ax=ax)
+
 x = np.linspace(rv_theoretical.ppf(margin), rv_theoretical.ppf(1 - margin), number_of_samples * 10)
 x_range = x[x <= left_vline_position]
+
 ax.fill_between(x_range, rv_theoretical.pdf(x_range), np.zeros(len(x_range)), color='b', alpha=0.2)
 x = np.linspace(rv_theoretical.ppf(margin), rv_theoretical.ppf(1 - margin), number_of_samples * 10)
+
 x_range = x[x >= right_vline_position]
 ax.fill_between(x_range, rv_theoretical.pdf(x_range), np.zeros(len(x_range)), color='b', alpha=0.2)
 
